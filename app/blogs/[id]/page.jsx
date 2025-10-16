@@ -4,18 +4,18 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Footer from "@/Components/Footer";
 import Link from "next/link";
+import axios from "axios";
 
 const page = ({ params }) => {
   const [data, setData] = useState();
 
-  const fetchBlogData = () => {
-    for (let i = 0; i < blog_data.length; i++) {
-      if (Number(params.id) === blog_data[i].id) {
-        setData(blog_data[i]);
-        console.log(blog_data[i]);
-        break;
-      }
-    }
+  const fetchBlogData = async () => {
+    const response = await axios.get("/api/blog", {
+      params: {
+        id: params.id,
+      },
+    });
+    setData(response.data);
   };
 
   useEffect(() => {
@@ -27,12 +27,14 @@ const page = ({ params }) => {
       <div className="bg-gray-200 py-5 px-5 md:px-12 lg:px-28">
         <div className="flex justify-between items-center">
           <Link href="/">
-          <Image
-            src={assets.logo}
-            width={180}
-            alt=""
-            className="w-[130px] sm:w-auto"
-          />
+        <h1 className="text-3xl font-semibold  pt-2 pb-2 pr-3 pl-3 rounded hover:bg-black hover:text-white cursor-pointer">Blogger</h1>
+
+            {/* <Image
+              src={assets.logo}
+              width={180}
+              alt=""
+              className="w-[130px] sm:w-auto"
+            /> */}
           </Link>
           <button className="flex item-center gap-2 font-medium py-1 px-3 sm:px-6 border border-black">
             Get started <Image />
@@ -44,7 +46,7 @@ const page = ({ params }) => {
           </h1>
           <Image
             className="mx-auto mt-6 border border-white rounded-full"
-            src={data.author_img}
+            src={data.authorImg}
             alt=""
             width={60}
             height={60}
