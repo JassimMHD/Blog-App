@@ -5,6 +5,7 @@
     display: nonde;
 }
 
-.scrollbar-hide::{
-    display: nonde;
+.scrollbar-hide{
+    -ms-overflow-style: none;
+    scrollbar-width: none;
 }
